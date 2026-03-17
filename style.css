@@ -1,0 +1,60 @@
+:root { --primary: #f1c40f; --green: #2ecc71; --red: #e74c3c; --blue: #3498db; }
+.dark-theme { --bg: #121212; --card: #1e1e1e; --text: #e0e0e0; --border: #333; --input: #2a2a2a; }
+.light-theme { --bg: #f5f6fa; --card: #ffffff; --text: #2f3640; --border: #dcdde1; --input: #f1f2f6; }
+
+body { font-family: sans-serif; background: var(--bg); color: var(--text); margin: 0; padding-bottom: 80px; transition: 0.3s; }
+.app-header { background: #000; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--primary); position: sticky; top:0; z-index:1000; }
+.brand { color: var(--primary); font-weight: bold; font-size: 14px; }
+#theme-toggle { background: var(--primary); border: none; padding: 5px 10px; border-radius: 5px; font-weight: bold; cursor: pointer; }
+
+.container { padding: 0 15px; max-width: 500px; margin: auto; }
+
+/* Project Name ကို Header နဲ့ ခွာလိုက်တာပါ */
+.project-card { 
+    background: var(--card); 
+    padding: 15px; 
+    border-radius: 12px; 
+    border: 1px solid var(--border); 
+    margin-top: 20px; 
+    margin-bottom: 12px; 
+}
+#site-name { background: none; border: none; color: var(--primary); font-size: 16px; width: 100%; text-align: center; font-weight: bold; outline: none; }
+
+/* Dashboard & Cards */
+.balance-card { text-align: center; border-bottom: 4px solid var(--primary); background: var(--card); padding: 15px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 12px; }
+.stat-grid { display: flex; gap: 10px; }
+.mini-card { flex: 1; text-align: center; font-weight: bold; background: var(--card); padding: 15px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 12px; }
+.income { border-bottom: 4px solid var(--green); } .expense { border-bottom: 4px solid var(--red); }
+
+/* Tabs & Forms */
+.tab-pane { display: none; } .tab-pane.active { display: block; }
+.action-card { background: var(--card); padding: 15px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 12px; }
+.tab-toggle, .stock-toggle { display: flex; gap: 8px; margin-bottom: 10px; }
+.tab-toggle button, .stock-toggle button { flex: 1; padding: 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--input); color: var(--text); font-weight: bold; cursor: pointer; }
+.tab-toggle button.active, .stock-toggle button.active { background: var(--primary); color: #000; }
+.stock-toggle button#toggle-stock-out.active { background: var(--red); color: #fff; }
+
+input, select { background: var(--input); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 8px; width: 100%; margin-bottom: 10px; box-sizing: border-box; }
+.form-row { display: flex; gap: 10px; }
+.btn-save { width: 100%; padding: 12px; background: var(--green); border: none; border-radius: 8px; color: #fff; font-weight: bold; cursor: pointer; }
+
+/* List Tables */
+.scroll-wrapper { max-height: 250px; overflow-y: auto; background: var(--card); border-radius: 10px; border: 1px solid var(--border); margin-bottom: 15px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+td, th { padding: 12px; border-bottom: 1px solid var(--border); text-align: left; }
+.list-header { font-size: 12px; font-weight: bold; margin: 15px 0 8px 5px; opacity: 0.8; }
+
+/* Bottom Nav */
+.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #000; display: flex; border-top: 1px solid var(--border); z-index: 1000; }
+.nav-item { flex: 1; padding: 15px; background: none; border: none; color: #888; font-weight: bold; font-size: 11px; cursor: pointer; }
+.nav-item.active { color: var(--primary); border-top: 3px solid var(--primary); }
+
+/* Tools & Modal */
+.calc-box { background: var(--input); padding: 15px; border-radius: 8px; display: none; margin-bottom: 10px; }
+.tool-btn { width: 100%; padding: 12px; background: var(--card); border: 1px solid var(--border); color: var(--text); text-align: left; margin-bottom: 5px; border-radius: 8px; cursor: pointer; }
+.modal-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 2000; }
+.modal-box { background: var(--card); padding: 20px; border-radius: 15px; width: 85%; max-width: 320px; text-align: center; border: 1px solid var(--border); }
+.modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+.btn-cancel { flex: 1; padding: 10px; border-radius: 8px; border: none; background: #555; color: white; cursor: pointer; }
+.btn-confirm { flex: 1; padding: 10px; border-radius: 8px; border: none; background: var(--red); color: white; cursor: pointer; }
+.res-tag { margin-top: 10px; text-align: center; color: var(--primary); font-weight: bold; }

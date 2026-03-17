@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Manager Pro v3.4</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+
+    <header class="app-header">
+        <div class="brand">SITE MANAGER PRO v3.4</div>
+        <button id="theme-toggle" onclick="toggleTheme()">🌓 Theme</button>
+    </header>
+
+    <div class="container">
+        <div class="project-card">
+            <input type="text" id="site-name" onchange="saveSiteName()" placeholder="PROJECT နာမည်ရိုက်ပါ...">
+        </div>
+
+        <div id="dashboard-section" class="main-dashboard">
+            <div class="balance-card">
+                <small>လက်ကျန်ငွေ (Balance)</small>
+                <h2 id="balance-amount">0</h2>
+            </div>
+            <div class="stat-grid">
+                <div class="mini-card income"><small>ဝင်ငွေ</small><div id="monthly-income">0</div></div>
+                <div class="mini-card expense"><small>ယနေ့စရိတ်</small><div id="today-expense">0</div></div>
+            </div>
+        </div>
+
+        <div id="accounts" class="tab-pane active">
+            <div class="action-card">
+                <div class="tab-toggle">
+                    <button id="toggle-inc" onclick="showInput('income')">INCOME</button>
+                    <button id="toggle-lbr" onclick="showInput('worker')">LABOUR</button>
+                    <button id="toggle-use" onclick="showInput('expense')">USAGE</button>
+                </div>
+                <div id="input-form" class="dynamic-form" style="display:none;">
+                    <div class="form-row">
+                        <input type="date" id="entry-date">
+                        <input type="number" id="entry-amt" placeholder="ပမာဏ">
+                    </div>
+                    <input type="text" id="entry-desc" placeholder="အကြောင်းအရာ/အမည်">
+                    <button onclick="confirmSave()" class="btn-save">သိမ်းဆည်းမည်</button>
+                </div>
+            </div>
+            <div class="list-header">👷 LABOUR LIST</div>
+            <div class="scroll-wrapper"><table id="worker-table"></table></div>
+            <div class="list-header">💸 USAGE LIST</div>
+            <div class="scroll-wrapper"><table id="expense-table"></table></div>
+            <div class="list-header" style="color:var(--green)">💰 INCOME LIST</div>
+            <div class="scroll-wrapper"><table id="income-table"></table></div>
+        </div>
+
+        <div id="store" class="tab-pane">
+            <div id="inventory-cards" class="inventory-grid"></div>
+            <div class="action-card">
+                <h3 style="margin-top:0">Stock Entry</h3>
+                <select id="mat-select" style="margin-bottom:10px;"></select>
+                <div class="stock-toggle">
+                    <button id="toggle-stock-in" onclick="setStockType('IN')" class="active">IN (အဝင်)</button>
+                    <button id="toggle-stock-out" onclick="setStockType('OUT')">OUT (အထွက်)</button>
+                </div>
+                <input type="number" id="stock-qty" placeholder="အရေအတွက်">
+                <button onclick="saveStock()" class="btn-save" style="background:var(--blue); margin-top:5px;">Save to Store</button>
+            </div>
+            <div class="list-header">STOCK HISTORY</div>
+            <div class="scroll-wrapper"><table id="stock-history-table"></table></div>
+        </div>
+
+        <div id="tools" class="tab-pane">
+            
+
+            <div class="list-header" style="margin-top:20px;">🧱 CALCULATORS</div>
+            
+            <button class="tool-btn" onclick="toggleCalc('con-ui')">🔹 Concrete Mix (Ratio)</button>
+            <div id="con-ui" class="calc-box">
+                <select id="con-ratio">
+                    <option value="1:1.5:3">1:1.5:3 (M20)</option>
+                    <option value="1:2:4" selected>1:2:4 (M15)</option>
+                    <option value="1:3:6">1:3:6 (M10)</option>
+                </select>
+                <input type="number" id="c-v" placeholder="Volume (Sud)">
+                <button onclick="runConcrete()" class="btn-save">တွက်မည်</button>
+                <div id="res-con" class="res-tag">Result: --</div>
+            </div>
+
+            <button class="tool-btn" onclick="toggleCalc('brick-ui')">🔹 Brick Calculator</button>
+            <div id="brick-ui" class="calc-box">
+                <input type="number" id="b-a" placeholder="Wall Area (Sqft)">
+                <input type="number" id="b-t" placeholder="Thickness (4.5 or 9 inch)">
+                <button onclick="runBrick()" class="btn-save">တွက်မည်</button>
+                <div id="res-brick" class="res-tag">Result: --</div>
+            </div>
+
+            <button class="tool-btn" onclick="toggleCalc('timber-ui')">🔹 Timber (သစ်တန်တွက်ရန်)</button>
+            <div id="timber-ui" class="calc-box">
+                <div class="form-row">
+                    <input type="number" id="t-w" placeholder="Width(in)">
+                    <input type="number" id="t-h" placeholder="Height(in)">
+                </div>
+                <input type="number" id="t-l" placeholder="Length(ft)">
+                <input type="number" id="t-q" placeholder="Qty (အရေအတွက်)">
+                <button onclick="runTimber()" class="btn-save">တွက်မည်</button>
+                <div id="res-timber" class="res-tag">Result: --</div>
+            </div>
+
+            <div class="tool-group" style="margin-top:20px;">
+                <div class="list-header">⚙️ STORE SETTINGS</div>
+                <div class="action-card">
+                    <input type="text" id="new-mat-name" placeholder="ပစ္စည်းအမည်">
+                    <select id="new-mat-unit">
+                        <option value="Bags">Bags</option>
+                        <option value="Sud">Sud</option>
+                        <option value="Nos">Nos</option>
+                        <option value="Tons">Tons</option>
+                        <option value="Feet">Feet</option>
+                    </select>
+                    <button onclick="addMaterial()" class="btn-save" style="background:var(--blue); margin-top:10px;">Add Item</button>
+                </div>
+                <div class="scroll-wrapper"><table id="material-manage-table"></table></div>
+            </div>
+            
+            <div class="list-header">📊 REPORT MANAGEMENT</div>
+            <button onclick="exportAndUpload()" class="tool-btn" style="background:#27ae60; color:white; border:none; text-align:center; font-size:16px;">💾 Save to Local</button>
+
+            <div class="list-header" style="color:var(--red); margin-top:30px;">⚠️ DATA CONTROL</div>
+            <button onclick="clearAccountData()" class="tool-btn" style="background:var(--red); color:white; border:none; text-align:center;">🗑️ Clear Account Data Only</button>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <button onclick="switchTab('accounts')" id="btn-acc" class="nav-item active">ACCOUNTS</button>
+        <button onclick="switchTab('store')" id="btn-store" class="nav-item">STORE</button>
+        <button onclick="switchTab('tools')" id="btn-tools" class="nav-item">TOOLS</button>
+    </nav>
+
+    <div id="custom-modal" class="modal-overlay" style="display:none;">
+    <div class="modal-box">
+        <h4 style="color:var(--red)">⚠️ သတိပေးချက်</h4>
+        <p id="modal-msg">စာရင်းများကို ဖျက်ပစ်ရန် သေချာပါသလား?</p>
+        <div class="modal-actions">
+            <button onclick="closeModal()" class="btn-cancel">မဖျက်တော့ပါ</button>
+            <button id="modal-confirm-btn" class="btn-confirm">သေချာသည်</button>
+        </div>
+    </div>
+</div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
